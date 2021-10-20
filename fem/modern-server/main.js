@@ -4,8 +4,13 @@ import morgan from 'morgan'
 
 const app = express()
 
-app.use(bp.urlencoded({extended:true}))
-app.use(bp.json())
+//  ----> Traditionally 
+// app.use(bp.urlencoded({extended:true}))
+// app.use(bp.json())
+
+// ---> Modern -Inbuilt with the express
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 app.use(morgan('dev'))
 
 const db = []
@@ -21,6 +26,13 @@ res.json(newTodo)
 
 app.get('/todo', (req, res) => {
   res.json(db)
+})
+
+app.get('/todo/:id', (req, res) => {
+  const todo = db.find(t => {
+    return t.id === +req.params.id
+  })
+  res.json({data: todo})
 })
 
 app.listen('8000', () => {
