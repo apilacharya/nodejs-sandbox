@@ -1,0 +1,17 @@
+{
+  "name": "traversy_node",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "HTTP_node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon HTTP_node.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
