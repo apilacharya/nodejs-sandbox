@@ -6,4 +6,6 @@ export const env = {
   GEOCODER_API_KEY: process.env.GEOCODER_API_KEY,
   MONGO_URI: process.env.MONGO_URI,
   NODE_ENV: process.env.NODE_ENV,
+  FILE_UPLOAD_PATH: process.env.FILE_UPLOAD_PATH,
+  MAX_FILE_UPLOAD: process.env.MAX_FILE_UPLOAD
 };

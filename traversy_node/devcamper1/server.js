@@ -1,11 +1,14 @@
 import express from 'express';
+import path from 'path'
 import morgan from 'morgan';
 import colors from 'colors';
 import errorHandler from './middleware/error.js';
 import { env } from './config/env.js';
+import fileupload from 'express-fileupload'
 
 // Route files
 import bootcamps from './routes/bootcamps.js';
+import courses from './routes/courses.js'
 
 // DB file
 import connectDB from './config/db.js';
@@ -13,16 +16,28 @@ import connectDB from './config/db.js';
 // Activating database
 connectDB();
 
+const __dirname = path.resolve()
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// File uploading
+app.use(fileupload())
+
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses)
 app.use(errorHandler);
 
 // Dev logging middleware
 if (env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')))
 
 const PORT = process.env.PORT || 5000;
 
