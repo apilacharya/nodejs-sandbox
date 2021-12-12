@@ -1,16 +1,27 @@
 import express from 'express';
 import {
-  getCourses, 
+  getCourses,
   getCourse,
   addCourse,
   updateCourse,
-  deleteCourse
+  deleteCourse,
 } from '../controllers/courses.js';
+import { Course } from '../models/Course.js';
+import advancedResults from '../middleware/advancedResults.js';
+import { protect } from '../middleware/auth.js';
 
-const router = express.Router({mergeParams: true});
+const router = express.Router({ mergeParams: true });
 
-router.route('/').get(getCourses).post(addCourse)
-router.route('/:id').get(getCourse).put(updateCourse).delete(deleteCourse)
+router
+  .route('/')
+  .get(
+    advancedResults(Course, {
+      path: 'bootcamp',
+      select: 'name description',
+    }),
+    getCourses
+  )
+  .post(protect, addCourse);
+router.route('/:id').get(getCourse).put(protect, updateCourse).delete(protect, deleteCourse);
 
-
-export default router
+export default router;

@@ -10,14 +10,7 @@ import { env } from '../config/env.js';
 // @access Public
 
 const getBootcamps = asyncHandler(async (req, res, next) => {
- 
-
-  res.status(200).json({
-    success: true,
-    count: bootcamps.length,
-    pagination,
-    data: bootcamps,
-  });
+  res.status(200).json(res.advancedResults);
 });
 
 // @desc Get a single bootcamp

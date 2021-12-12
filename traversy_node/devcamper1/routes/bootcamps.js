@@ -10,6 +10,7 @@ import {
 } from '../controllers/bootcamps.js';
 import { Bootcamp } from '../models/Bootcamp.js';
 import advancedResults from '../middleware/advancedResults.js';
+import { protect } from '../middleware/auth.js';
 
 // Include other resource routers
 import courseRouter from './courses.js';
@@ -21,13 +22,16 @@ router.use('/:bootcampId/courses', courseRouter);
 
 router.route('/radius/:zipcode/:distance').get(getBootcampsInRadius);
 
-router.route('/:id/photo').put(bootcampPhotoUpload);
+router.route('/:id/photo').put(protect, bootcampPhotoUpload);
 
-router.route('/').get(advancedResults(Bootcamp, 'courses'), getBootcamps).post(createBootcamp);
+router
+  .route('/')
+  .get(advancedResults(Bootcamp, 'courses'), getBootcamps)
+  .post(protect, createBootcamp);
 router
   .route('/:id')
   .get(getBootcamp)
-  .put(updateBootcamp)
-  .delete(deleteBootcamp);
+  .put(protect, updateBootcamp)
+  .delete(protect, deleteBootcamp);
 
 export default router;
